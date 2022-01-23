@@ -39,7 +39,7 @@ const element = (
 );
 ```
 
-→ JavaScript 함수 호출 결과인 formatName(user)을 <h1> 엘리먼트에 포함함.
+→ JavaScript 함수 호출 결과인 formatName(user)을 `<h1>` 엘리먼트에 포함함.
 
 자동 세미콜론 삽입을 피하고자 괄호로 묶는 것(`element = ();`)을 권장함.
 
