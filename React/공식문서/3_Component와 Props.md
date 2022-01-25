@@ -149,7 +149,8 @@ function UserInfo(props){
 		<div className="UserInfo">	
 			<Avatar user={props.user}/>
 			<div className="UserInfo-name">
-			{props.user.name}
+				{props.user.name}
+			</div>
 		</div>
 	);
 }
