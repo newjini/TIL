@@ -13,3 +13,26 @@ console.log(doubled);
 이 코드는 콘솔에 `[ 2, 4, 6, 8, 10 ]` 을 출력한다.
 
 React에서 배열을 엘리먼트 리스트로 만드는 방식은 이와 거의 동일함.
+### 1. 여러 개의 컴포넌트 렌더링하기
+
+엘리먼트 모음을 만들고 `중괄호 {}` 를 이용하여 `JSX에 포함`시킬 수 있다.
+
+아래의 JavaScript `map()` 함수를 사용해 `numbers` 배열을 반복 실행한다. 각 항목에 대해 `<li>` 엘리먼트를 반환하고 엘리먼트 배열의 결과를 `listItems`에 저장한다.
+
+```jsx
+const numbers = [1,2,3,4,5];
+const listItems = numbers.map((number) =>
+  <li>{number}</li>
+);
+```
+
+`listItems` 배열을 `<ul>` 엘리먼트 안에 포함하고 DOM에 렌더링한다. 
+
+```jsx
+ReactDOM.render(
+	<ul>{listItems}</ul>,
+	document.getElementById('root')
+);
+```
+
+이 코드는 1부터 5까지의 숫자로 이루어진 리스트를 보여준다.
