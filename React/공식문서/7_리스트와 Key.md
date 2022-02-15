@@ -79,3 +79,39 @@ ReactDOM.render(
 	document.getElementById('root')
 );
 ```
+### 3. Key
+Key는 React가 어떤 항목을 변경, 추가 또는 삭제할 지 식별하는 것을 돕는다. key는 엘리먼트에 안정적인 고유성을 부여하기 위해 배열 내부의 엘리먼트에 지정해야 한다.
+
+```jsx
+const numbers = [1,2,3,4,5];
+const listItems = numbers.map((number) =>
+	<li key={number.toString()}>
+		{number}
+	</li>
+);
+```
+
+Key를 선택하는 가장 좋은 방법은 `리스트의 다른 항목들 사이에서 해당 항목을 고유하게 식별할 수 있는 문자열을 사용하는 것.` 대부분의 경우, **데이터의 ID**를 key로 사용함.
+
+```jsx
+const todoItems = todos.map((todo) =>
+	<li key={todo.id}>
+		{todo.text}
+	</li>
+);
+```
+
+렌더링 한 항목에 대한 안정적인 ID가 없다면 최후의 수단으로 `항목의 인덱스`를 key로 사용 가능.
+
+```jsx
+const todoItems = todos.map((todo, index) =>
+	// Only do this if items have no stable IDs
+	<li key={index}>
+		{todo.text}
+	</li>
+);
+```
+
+항목의 순서가 바뀔 수 있는 경우, key에 인덱스를 사용하는 것은 권장 X.  
+이로 인해 성능이 저하되거나 컴포넌트의 state와 관련된 문제가 발생할 수 있음.  
+리스트 항목에 명시적으로 key를 지정하지 않으면 React는 기본적으로 **인덱스**를 key로 사용함.
