@@ -36,3 +36,46 @@ ReactDOM.render(
 ```
 
 이 코드는 1부터 5까지의 숫자로 이루어진 리스트를 보여준다.
+### 2. 기본 리스트 컴포넌트
+
+일반적으로 `컴포넌트`안에서 리스트를 렌더링한다.
+
+이전 예시를 numbers 배열을 받아서 순서없는 엘리먼트 리스트를 출력하는 컴포넌트로 리팩토링할 수 있다.
+
+```jsx
+function NumberList(props) {
+	const numbers = props.numbers;
+	const listItems = numbers.map((number) =>
+		<li>{number}</li>
+	);
+	return (
+		<ul>{listItems}</ul>
+	);
+}
+const numbers = [1, 2, 3, 4, 5];
+ReactDOM.render(
+	<NumberList numbers={numbers} />,
+	document.getElementById('root')
+);
+```
+
+위 코드를 실행하면 리스트의 각 항목에 key를 넣어야 한다는 경고가 표시된다. “key”는 엘리먼트 리스트를 만들 때 포함해야 하는 특수한 문자열 어트리뷰트다. 이제 `numbers.map()` 안에서 리스트의 각 항목에 `key`를 할당하여 키 누락 문제를 해결해보자.
+
+```jsx
+function NumberList(props){
+	const numbers = props.numbers;
+	const listItems = numbers.map((number) =>
+		<li key={number.toString()}>
+			{number}
+		</li>
+	);
+	return (
+		<ul>{listItems}</ul>
+	);
+}
+const numbers = [1, 2, 3, 4, 5];
+ReactDOM.render(
+	<NumberList numbers={numbers} />,
+	document.getElementById('root')
+);
+```
