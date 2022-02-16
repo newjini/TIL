@@ -115,3 +115,66 @@ const todoItems = todos.map((todo, index) =>
 항목의 순서가 바뀔 수 있는 경우, key에 인덱스를 사용하는 것은 권장 X.  
 이로 인해 성능이 저하되거나 컴포넌트의 state와 관련된 문제가 발생할 수 있음.  
 리스트 항목에 명시적으로 key를 지정하지 않으면 React는 기본적으로 **인덱스**를 key로 사용함.
+### 4. Key로 컴포넌트 추출하기
+
+키는 주변 배열의 context에서만 의미가 있다.  
+예를 들어 `ListItem`컴포넌트를 추출한 경우 `ListItem`안에 있는 `<li>` 엘리먼트가 아니라 배열의 `<ListItem />`엘리먼트가 key를 가져야 한다.
+
+[ 예시 : 잘못된 Key 사용법 ]
+
+```jsx
+function ListItem(props) {
+	const value = props.value;
+	return (
+		// Wrong! 여기에는 key를 지정할 필요 X.
+		<li key={value.toString()}>
+			{value}
+		</li>
+	);
+}
+function NumberList(props) {
+	const numbers = props.numbers;
+	const listItems = numbers.map((number) =>
+		// Wrong! 여기에 key를 지정해야 한다.
+		<ListItem value={number} />
+	);
+	return (
+		<ul>
+			{listItems}
+		</ul>
+	);
+}
+const numbers = [1,2,3,4,5];
+ReactDOM.render(
+	<NumberList numbers={numbers} />,
+	document.getElementById('root')
+);
+```
+
+[ 예시 : 올바른 Key 사용법 ]
+
+```jsx
+function ListItem(props) {
+	// Correct! 여기에는 key 지정할 필요 X
+	return <li>{props.value}</li>;
+}
+function NumberList(props) {
+	const numbers = props.numbers;
+	const listItems = numbers.map((number) =>
+		// Correct! 배열 안에 key를 지정해야 함.
+		<ListItem key={number.toString()} value={number}/>
+	);
+	return (
+		<ul>
+			{listItems}
+		</ul>
+	);
+}
+const numbers = [1,2,3,4,5];
+ReactDOM.render(
+	<NumberList numbers={numbers} />,
+	document.getElementById('root')
+);
+```
+
+** 경험상 `map()` 함수 내부에 있는 엘리먼트에 key를 넣어 주는 게 좋다! **
