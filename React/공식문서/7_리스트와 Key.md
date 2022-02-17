@@ -178,3 +178,52 @@ ReactDOM.render(
 ```
 
 ** 경험상 `map()` 함수 내부에 있는 엘리먼트에 key를 넣어 주는 게 좋다! **
+### 5. Key는 형제 사이에서만 고유한 값이어야 한다.
+
+Key는 배열 안에서 `형제 사이`에서 고유해야 하고 전체 범위에서 고유할 필요는 없다. 두 개의 다른 배열을 만들 때 `동일한 key`를 사용할 수 있다.
+
+```jsx
+function Blog(props) {
+	const sidebar = (
+		<ul>
+			{props.posts.map((post) =>
+				<li key={post.id}>
+					{post.title}
+				</li>
+			)}
+		</ul>
+	);
+	const content = props.posts.map((post) =>
+		<div key={post.id}>
+			<h3>{post.title}</h3>
+			<p>{post.content}</p>
+		</div>
+	);
+	return (
+		<div>
+			{sidebar}
+			<hr />
+			{content}
+		</div>
+	);
+}
+const posts = [
+	{id: 1, title: 'Hello World', content: 'Welcome to learning React!'},
+  {id: 2, title: 'Installation', content: 'You can install React from npm.'}
+];
+ReactDOM.render(
+  <Blog posts={posts} />,
+  document.getElementById('root')
+);
+```
+React에서 key는 힌트를 제공하지만 컴포넌트로 전달하지는 않는다. 컴포넌트에서 key와 동일한 값이 필요하면, 다른 이름의 prop으로 명시적으로 전달한다.
+
+```jsx
+const content = posts.map((post) =>
+	<Post
+		key={post.id}
+		id={post.id}
+		title={post.title} />
+);
+```
+위 예시에서 `Post` 컴포넌트는 `props.id`를 읽을 수 있지만 `props.key`는 읽을 수 없다.
