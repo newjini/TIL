@@ -227,3 +227,39 @@ const content = posts.map((post) =>
 );
 ```
 위 예시에서 `Post` 컴포넌트는 `props.id`를 읽을 수 있지만 `props.key`는 읽을 수 없다.
+### 6. JSX에 map() 포함시키기
+
+위 예시에서 별도의 `listItems`변수를 선언하고 이를 JSX에 포함했다.
+
+```jsx
+function NumberList(props) {
+	const numbers = props.numbers;
+	const listItems = numbers.map((number) =>
+		<ListItem key={number.toString()}
+							value={number} />
+	);
+	return (
+		<ul>
+			{listItems}
+		</ul>
+	);
+}
+```
+
+JSX를 사용하면 중괄호 안에 모든 표현식을 포함시킬 수 있으므로 `map()` 함수의 결과를 인라인으로 처리할 수 있다.
+
+```jsx
+function NumberList(props) {
+	const numbers = props.numbers;
+	return (
+		<ul>
+			{numbers.map((number) =>
+				<ListItem key={number.toString()}
+									value={number} />
+			)}
+		</ul>
+	);
+}
+```
+
+이 방식을 사용하면 코드가 더 깔끔해 지지만, 이 방식을 남발하는 것은 좋지 않다. JavaScript와 마찬가지로 가독성을 위해 변수로 추출해야 할지 아니면 인라인으로 넣을 지는 개발자가 직접 판단해야 한다. `map()` 함수가 너무 중첩된다면 컴포넌트로 추출하는 것이 좋다.
